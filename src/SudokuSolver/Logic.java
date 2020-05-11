@@ -47,7 +47,8 @@ public class Logic {
         int [][] storeArray = new int[SIZE][SIZE];
         for (int i = 0; i < 9; i ++) {
             for (int j = 0; j < 9; j ++) {
-                storeArray[i][j] = getNumber(array[i][j]);
+                String textNumber = array[i][j].replaceFirst("^0+(?!$)", "").trim();
+                storeArray[i][j] = getNumber(textNumber);
             }
         }
         grid = storeArray;

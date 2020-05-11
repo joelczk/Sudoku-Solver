@@ -7,6 +7,7 @@ import javafx.scene.Scene;;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -16,10 +17,13 @@ public class Main extends Application {
     private static String [][] storeArray = new String[SIZE][SIZE];
     private Logic logic;
     private Messages messages;
-
+    private ButtonUI buttonUI;
+    private GridPaneUI gridPaneUI;
     public Main() {
         messages = new Messages();
         logic = new Logic();
+        buttonUI = new ButtonUI();
+        gridPaneUI = new GridPaneUI();
     }
 
     public String[][] getArray() {
@@ -34,25 +38,19 @@ public class Main extends Application {
     }
 
     private Parent createContent() {
+        Pane layer = new Pane();
         GridPane root = new GridPane();
-        root.setAlignment(Pos.CENTER);
-        root.setPrefSize(messages.SIXHUNDRED, messages.SIXHUNDRED);
-        root.setStyle("-fx-padding: 20");
+        gridPaneUI.createGridPane(root);
         for (int i = 0; i < SIZE; i ++) {
             for (int j = 0; j < SIZE; j ++) {
-                TextField textField = new TextField(messages.ZEROSTRING);
-                textField.setPrefHeight(messages.HEIGHT);
-                textField.setAlignment(Pos.CENTER);
-                textField.setEditable(true);
+                TextField textField = gridPaneUI.createTextField(messages.isEditable, messages.ZEROSTRING);
+                textField.setStyle("-fx-border-color: black");
                 gridText[i][j] = textField;
                 root.add(textField, i, j, messages.ONE, messages.ONE);
             }
         }
-        Button solveButton = new Button(messages.SOLVESTRING);
-        solveButton.setAlignment(Pos.CENTER);
-        solveButton.setPrefWidth(Messages.WIDTH);
-        solveButton.setTranslateY(messages.TRANSLATEY);
-        root.add(solveButton,messages.FOUR,messages.TEN,messages.ONE,messages.ONE);
+        Button solveButton = buttonUI.createSolveButton();
+        Button randomiseButton = buttonUI.createRandomizeButton();
         solveButton.setOnAction(e -> {
             storeArray = getArray();
             logic.updateGrid(storeArray);
@@ -62,16 +60,15 @@ public class Main extends Application {
             for (int i = 0; i < SIZE; i ++) {
                 for (int j = 0; j <SIZE; j ++) {
                     int number = outputGrid[i][j];
-                    TextField textField = new TextField(Integer.toString(number));
-                    textField.setPrefHeight(messages.PREFERREDHEIGHT);
-                    textField.setAlignment(Pos.CENTER);
-                    textField.setEditable(false);
+                    TextField textField = gridPaneUI.createTextField(messages.isNotEditable, Integer.toString(number));
+                    textField.setStyle("-fx-border-color: black");
                     gridText[i][j] = textField;
                     root.add(textField, i, j, messages.ONE, messages.ONE);
                 }
             }
         });
-        return root;
+        layer.getChildren().addAll(root, randomiseButton, solveButton);
+        return layer;
     }
 
     @Override
