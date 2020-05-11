@@ -9,3 +9,5 @@ out/production/SudokuSolverFX/SudokuSolver/UI/ButtonUI.class
 out/production/SudokuSolverFX/SudokuSolver/Logic/Sudoku.class
 out/production/SudokuSolverFX/SudokuSolver/Logic/Solver.class
 out/production/SudokuSolverFX/SudokuSolver/Logic/Randomize.class
+out/production/SudokuSolverFX/SudokuSolver/Controller.class
+out/production/SudokuSolverFX/SudokuSolver/Logic/Checker.class

@@ -1,5 +1,6 @@
 package SudokuSolver;
 
+import SudokuSolver.Logic.Checker;
 import SudokuSolver.Logic.Randomize;
 import SudokuSolver.Logic.Solver;
 import SudokuSolver.UI.ButtonUI;
@@ -23,6 +24,7 @@ public class Main extends Application {
     private ButtonUI buttonUI;
     private GridPaneUI gridPaneUI;
     private Randomize randomize;
+    private Checker checker;
 
     public Main() {
         messages = new Messages();
@@ -30,6 +32,7 @@ public class Main extends Application {
         buttonUI = new ButtonUI();
         gridPaneUI = new GridPaneUI();
         randomize = new Randomize();
+        checker = new Checker();
     }
 
     public String[][] getArray() {
@@ -57,6 +60,25 @@ public class Main extends Application {
         }
         Button solveButton = buttonUI.createSolveButton();
         Button randomiseButton = buttonUI.createRandomizeButton();
+        Button checkButton = buttonUI.createCheckButton();
+
+        checkButton.setOnAction(e -> {
+            String [][] grid = getArray();
+            boolean [][] mask = checker.check(grid);
+            for (int i = 0; i < SIZE; i ++) {
+                for (int j = 0; j < SIZE; j ++) {
+                    TextField textField = gridPaneUI.createTextField(messages.isNotEditable, grid[i][j]);
+                    textField.setStyle("-fx-border-color: black");
+                    if (mask[i][j] == false) {
+                        textField.setText("FALSE");
+                        textField.setEditable(true);
+                    }
+                    gridText[i][j] = textField;
+                    root.add(textField, i, j, messages.ONE, messages.ONE);
+                }
+            }
+        });
+
         randomiseButton.setOnAction(e -> {
             int [][] randomizedGrid = randomize.hideKDigits();
             for (int i = 0; i < SIZE; i ++) {
@@ -88,7 +110,7 @@ public class Main extends Application {
                 }
             }
         });
-        layer.getChildren().addAll(root, randomiseButton, solveButton);
+        layer.getChildren().addAll(root, randomiseButton, solveButton, checkButton);
         return layer;
     }
 
