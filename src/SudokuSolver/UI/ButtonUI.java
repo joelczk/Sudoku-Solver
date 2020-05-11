@@ -1,5 +1,6 @@
-package SudokuSolver;
+package SudokuSolver.UI;
 
+import SudokuSolver.Messages;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
@@ -26,5 +27,14 @@ public class ButtonUI {
         randomiseButton.setTranslateY(messages.TRANSLATEY);
         randomiseButton.setTranslateX(messages.RANOMIZETRANSLATEX);
         return randomiseButton;
+    }
+
+    public Button createCheckButton() {
+        Button checkButton = new Button(messages.CHECKSTRING);
+        checkButton.setAlignment(Pos.CENTER);
+        checkButton.setPrefWidth(Messages.WIDTH);
+        checkButton.setTranslateY(messages.TRANSLATEY);
+        checkButton.setTranslateX(messages.CHECKERTRANSLATEX);
+        return checkButton;
     }
 }

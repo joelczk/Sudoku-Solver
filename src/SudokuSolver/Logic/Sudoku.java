@@ -1,11 +1,11 @@
-package SudokuSolver;
+package SudokuSolver.Logic;
 
-public class Logic {
+public class Sudoku {
     protected int [][] grid;
     protected static final int SIZE = 9;
     protected static final int EMPTY = 0;
 
-    public Logic() {
+    public Sudoku() {
         grid = new int[SIZE][SIZE];
         for (int i = 0; i < SIZE; i ++) {
             for (int j = 0; j < SIZE; j ++) {
@@ -54,7 +54,7 @@ public class Logic {
         grid = storeArray;
     }
 
-    private boolean isSameRow(int row, int number) {
+    public boolean isSameRow(int row, int number) {
         for (int i = 0; i < SIZE; i++) {
             if (grid[row][i] == number) {
                 return true;
@@ -63,7 +63,7 @@ public class Logic {
         return false;
     }
 
-    private boolean isSameCol(int col, int number) {
+    public boolean isSameCol(int col, int number) {
         for (int i = 0; i < SIZE; i++) {
             if (grid[i][col] == number) {
                 return true;
@@ -85,7 +85,7 @@ public class Logic {
         return false;
     }
 
-    private boolean isValid(int row, int col, int number) {
+    public boolean isValid(int row, int col, int number) {
         return !isSameRow(row, number) && !isSameCol(col, number) && !isSameBox(row, col, number);
     }
 

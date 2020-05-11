@@ -11,12 +11,14 @@ public class Messages {
     public static final double SIXHUNDRED = 600;
     public static final double PREFERREDHEIGHT = 50;
     public static final double HEIGHT = 50;
-    public static final double SOLVETRANSLATEX = 220;
+    public static final double SOLVETRANSLATEX = 250;
     public static final double RANOMIZETRANSLATEX = 470;
+    public static final double CHECKERTRANSLATEX = 20;
     //all string static values
     public static final String ZEROSTRING = "0";
     public static final String SOLVESTRING = "SOLVE";
     public static final String RANDOMISESTRING = "Randomise";
+    public static final String CHECKSTRING = "Check";
     public static final String SUDOKUSOLVER = "Sudoku Solver";
     //all boolean static values
     public static final boolean isEditable = true;

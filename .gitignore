@@ -4,3 +4,8 @@ out/production/SudokuSolverFX/SudokuSolver/Messages.class
 out/artifacts/SudokuSolverFX/SudokuSolverFX.jar
 out/production/SudokuSolverFX/SudokuSolver/ButtonUI.class
 out/production/SudokuSolverFX/SudokuSolver/GridPaneUI.class
+out/production/SudokuSolverFX/SudokuSolver/UI/GridPaneUI.class
+out/production/SudokuSolverFX/SudokuSolver/UI/ButtonUI.class
+out/production/SudokuSolverFX/SudokuSolver/Logic/Sudoku.class
+out/production/SudokuSolverFX/SudokuSolver/Logic/Solver.class
+out/production/SudokuSolverFX/SudokuSolver/Logic/Randomize.class

@@ -1,7 +1,10 @@
 package SudokuSolver;
 
+import SudokuSolver.Logic.Randomize;
+import SudokuSolver.Logic.Solver;
+import SudokuSolver.UI.ButtonUI;
+import SudokuSolver.UI.GridPaneUI;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;;
 import javafx.scene.control.Button;
@@ -15,15 +18,18 @@ public class Main extends Application {
     private final static int SIZE = 9;
     private TextField [][]gridText = new TextField[SIZE][SIZE];
     private static String [][] storeArray = new String[SIZE][SIZE];
-    private Logic logic;
+    private Solver solver;
     private Messages messages;
     private ButtonUI buttonUI;
     private GridPaneUI gridPaneUI;
+    private Randomize randomize;
+
     public Main() {
         messages = new Messages();
-        logic = new Logic();
+        solver = new Solver();
         buttonUI = new ButtonUI();
         gridPaneUI = new GridPaneUI();
+        randomize = new Randomize();
     }
 
     public String[][] getArray() {
@@ -51,12 +57,27 @@ public class Main extends Application {
         }
         Button solveButton = buttonUI.createSolveButton();
         Button randomiseButton = buttonUI.createRandomizeButton();
+        randomiseButton.setOnAction(e -> {
+            int [][] randomizedGrid = randomize.hideKDigits();
+            for (int i = 0; i < SIZE; i ++) {
+                for (int j = 0; j < SIZE; j ++) {
+                    int number = randomizedGrid[i][j];
+                    TextField textField = gridPaneUI.createTextField(messages.isNotEditable, Integer.toString(number));
+                    textField.setStyle("-fx-border-color: black");
+                    if (number == 0) {
+                        textField.setEditable(true);
+                    }
+                    gridText[i][j] = textField;
+                    root.add(textField, i, j, messages.ONE, messages.ONE);
+                }
+            }
+        });
+
         solveButton.setOnAction(e -> {
             storeArray = getArray();
-            logic.updateGrid(storeArray);
-            logic.solve();
-            int [][] outputGrid = logic.getGrid();
-            root.getChildren().clear();
+            solver.updateGrid(storeArray);
+            solver.solve();
+            int [][] outputGrid = solver.getGrid();
             for (int i = 0; i < SIZE; i ++) {
                 for (int j = 0; j <SIZE; j ++) {
                     int number = outputGrid[i][j];
