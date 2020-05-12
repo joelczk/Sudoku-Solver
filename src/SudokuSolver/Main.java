@@ -1,8 +1,8 @@
 package SudokuSolver;
 
-import SudokuSolver.Logic.Checker;
 import SudokuSolver.Logic.Randomize;
 import SudokuSolver.Logic.Solver;
+import SudokuSolver.Logic.Sudoku;
 import SudokuSolver.UI.ButtonUI;
 import SudokuSolver.UI.GridPaneUI;
 import javafx.application.Application;
@@ -24,7 +24,7 @@ public class Main extends Application {
     private ButtonUI buttonUI;
     private GridPaneUI gridPaneUI;
     private Randomize randomize;
-    private Checker checker;
+    private Sudoku sudoku;
 
     public Main() {
         messages = new Messages();
@@ -32,7 +32,7 @@ public class Main extends Application {
         buttonUI = new ButtonUI();
         gridPaneUI = new GridPaneUI();
         randomize = new Randomize();
-        checker = new Checker();
+        sudoku = new Sudoku();
     }
 
     public String[][] getArray() {
@@ -63,15 +63,19 @@ public class Main extends Application {
         Button checkButton = buttonUI.createCheckButton();
 
         checkButton.setOnAction(e -> {
-            String [][] grid = getArray();
-            boolean [][] mask = checker.check(grid);
+            storeArray = getArray();
+            sudoku.updateGrid(storeArray);
+            solver.updateGrid(storeArray);
+            int [][] initialGrid = sudoku.getGrid();
+            solver.solve();
+            int [][] outputGrid = solver.getGrid();
             for (int i = 0; i < SIZE; i ++) {
                 for (int j = 0; j < SIZE; j ++) {
-                    TextField textField = gridPaneUI.createTextField(messages.isNotEditable, grid[i][j]);
+                    TextField textField = gridPaneUI.createTextField(messages.isNotEditable, storeArray[i][j]);
                     textField.setStyle("-fx-border-color: black");
-                    if (mask[i][j] == false) {
-                        textField.setText("FALSE");
+                    if (initialGrid[i][j] != outputGrid[i][j]) {
                         textField.setEditable(true);
+                        textField.setStyle("-fx-background-color: yellow; -fx-border-color: black");
                     }
                     gridText[i][j] = textField;
                     root.add(textField, i, j, messages.ONE, messages.ONE);
@@ -110,6 +114,7 @@ public class Main extends Application {
                 }
             }
         });
+
         layer.getChildren().addAll(root, randomiseButton, solveButton, checkButton);
         return layer;
     }
